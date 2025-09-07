@@ -8,22 +8,20 @@ namespace MetricSystem.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new TemperatureConversionModel());
+            ViewBag.Celsius = null;
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Index(TemperatureConversionModel model, string submitButton)
+        public IActionResult Index(TemperatureModel model)
         {
-            if (submitButton == "Clear")
-            {
-                model.Clear();
-                ModelState.Clear(); // clear validation messages
-                return View(model);
-            }
-
             if (ModelState.IsValid)
             {
-                model.Calculate(); // perform conversion
+                ViewBag.Celsius = model.CalculateCelsius();
+            }
+            else
+            {
+                ViewBag.Celsius = null;
             }
 
             return View(model);
