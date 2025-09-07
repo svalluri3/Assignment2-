@@ -1,29 +1,30 @@
-﻿@model MetricSystem.Models.TemperatureConversionModel
+@model MetricSystem.Models.TemperatureModel
 
 @{
-    ViewData["Title"] = "Convert Fahrenheit to Celsius";
+    ViewData["Title"] = "Fahrenheit to Celsius Converter";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h1>Fahrenheit to Celsius Converter</h1>
 
-<form asp-action="Index" method="post" novalidate>
-    <div class="form-group">
-        <label asp-for="FahrenheitValue"></label>
-        <input asp-for="FahrenheitValue" class="form-control" />
-        <span asp-validation-for="FahrenheitValue" class="text-danger"></span>
+<form asp-action="Index" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div>
+        <label asp-for="Fahrenheit">Fahrenheit:</label>
+        <input asp-for="Fahrenheit" />
+        <span asp-validation-for="Fahrenheit" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="CelsiusValue"></label>
-        <input class="form-control" readonly value="@(Model.CelsiusValue.HasValue ? Model.CelsiusValue.Value.ToString("F2") : "")" />
+    <div>
+        <label>Celsius:</label>
+        <input readonly value="@(ViewBag.Celsius != null ? ((double)ViewBag.Celsius).ToString("F2") : "")" />
     </div>
 
-    <div class="form-group mt-3">
-        <button type="submit" name="submitButton" value="Convert" class="btn btn-primary">Convert</button>
-        <button type="submit" name="submitButton" value="Clear" class="btn btn-secondary">Clear</button>
-    </div>
+    <button type="submit">Convert</button>
+    <a asp-action="Index">Clear</a>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
